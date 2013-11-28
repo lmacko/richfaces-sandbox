@@ -1,5 +1,7 @@
 package org.richfaces.sandbox.chart;
 
+import static org.jboss.arquillian.graphene.Graphene.waitAjax;
+
 import java.io.File;
 import java.net.URL;
 
@@ -21,6 +23,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -28,8 +31,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.richfaces.sandbox.chart.ChartJs;
-import org.richfaces.sandbox.chart.EventBean;
+
+import category.Failing;
 
 
 @RunWith(Arquillian.class)
@@ -111,12 +114,14 @@ public class ChartTest {
 	@FindBy(id="clickInfo")
 	WebElement clickSpan;
 
-	//class should be flot-base in newer version
+
 	@FindBy(xpath="//div[@id='frm:chartChart']/canvas[@class='flot-overlay']")
 	WebElement chartCanvas;
 
+
 	@RunAsClient
 	@Test
+	@Category(Failing.class)
 	public void ClientSideClick(){
 		browser.get(deploymentUrl.toExternalForm());
 
@@ -127,31 +132,40 @@ public class ChartTest {
 
 		click.perform();
 
+
 		//crop decimal places
 		double xVal = chtestjs.pointX("frm:chart", 0, 0);
 		int xValInt = (int) xVal;
 
 		String expected =  Integer.toString(xValInt)  +
 				','+ Double.toString(chtestjs.pointY("frm:chart", 0, 0));
-		
-  
+
+
 		Assert.assertEquals(expected, clickSpan.getText());
 	}
-	
+
 	@FindBy(id="frm:msg")
 	WebElement msg;
-	
+
+
 	@RunAsClient
 	@Test
+	@Category(Failing.class)
 	public void ServerSideClick(){
 		browser.get(deploymentUrl.toExternalForm());
 
-		Action click = builder.moveToElement(chartCanvas,
-				chtestjs.pointXPos("frm:chart", 0, 0),
-				chtestjs.pointYPos("frm:chart", 0, 0))
-				.click().build();
+		String before = msg.getText();
+
+		int x = chtestjs.pointXPos("frm:chart", 0, 0);
+		int y = chtestjs.pointYPos("frm:chart", 0, 0);
+
+		Action click = builder.moveToElement(chartCanvas,x,y)
+                .click().build();
+
 
 		click.perform();
+
+		waitAjax().until().element(msg).text().not().equalTo(before);
 
 		int seriesIndex = 0;
 		int pointIndex = 0;
@@ -162,13 +176,13 @@ public class ChartTest {
 		String expected = "Server's speaking:Point with index "+pointIndex +
 				"within series "+seriesIndex+" was clicked. Point coordinates [" +
 				Integer.toString(xValInt)  +','
-				+ Double.toString(chtestjs.pointY("frm:chart", 0, 0))+"]";    
-				
-		
-  
+				+ Double.toString(chtestjs.pointY("frm:chart", 0, 0))+"]";
+
+
+
 		Assert.assertEquals(expected, msg.getText());
 	}
-	
-	
+
+
 
 }

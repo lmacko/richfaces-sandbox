@@ -1,11 +1,18 @@
 package org.richfaces.sandbox.chart.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Lukas Macko
  */
-public class NumberChartDataModel extends ChartDataModel<Number, Number>{
-    
+public class NumberChartDataModel extends ChartDataModel<Number, Number> implements Serializable{
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6103945987741329298L;
+
     public NumberChartDataModel(ChartType type){
         super(type);
         switch(type){
@@ -29,5 +36,5 @@ public class NumberChartDataModel extends ChartDataModel<Number, Number>{
     public Class getValueType() {
         return Number.class;
     }
-    
+
 }

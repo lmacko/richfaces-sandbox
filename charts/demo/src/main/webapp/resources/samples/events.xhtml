@@ -20,7 +20,7 @@
      
     <h:form >
         
-        <s:chart onplotclick="log(event)" onplothover="hover(event)" onmouseout="clear()" clickListener="#{eventBean.handler}">
+        <s:chart onplotclick="log(event)" onplothover="hover(event)" onmouseout="clear()" plotClickListener="#{eventBean.handler}">
             <r:repeat value="#{eventBean.countries}" var="country" >
                 <s:series label="#{country.name}" type="line">
                     <r:repeat value="#{country.data}" var="record">
@@ -28,12 +28,18 @@
                     </r:repeat>
                 </s:series>
             </r:repeat>
-            <r:ajax event="plotclick" render="msg" execute="msg"/>
+            <s:series label="particular" type="line" plotClickListener="#{eventBean.particularSeriesHandler}">
+                <r:repeat value="#{eventBean.countries[0].data}" var="record">
+                     <s:point x="#{record.year}" y="#{record.tons}" />
+                 </r:repeat>
+           </s:series>
+            <r:ajax event="plotclick" render="msg, particular" execute="msg, particular" />
             <s:xaxis label="year"/>
             <s:yaxis label="metric tons of CO2 per capita"/>
         </s:chart>
         
         <h:outputText id="msg" value="#{eventBean.msg}"/>
+        <h:outputText id="particular" value="#{eventBean.particular}"/>
     </h:form>
     <span id='hoverInfo'/><br/>
     <span id='clickInfo'></span><br/>
