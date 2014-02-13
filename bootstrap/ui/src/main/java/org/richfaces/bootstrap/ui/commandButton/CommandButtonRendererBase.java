@@ -17,7 +17,7 @@ import org.richfaces.ui.common.Mode;
  * @author <a href="http://community.jboss.org/people/bleathem">Brian Leathem</a>
  */
 @ResourceDependencies({
-        @ResourceDependency(library = "org.richfaces", name = "ajax.reslib"),
+        @ResourceDependency(library = "javax.faces", name = "jsf.js"), @ResourceDependency(library = "org.richfaces", name = "jquery.js"), @ResourceDependency(library = "org.richfaces", name = "richfaces.js"), @ResourceDependency(library = "org.richfaces", name = "richfaces-queue.reslib"),
         @ResourceDependency(library = "org.richfaces", name = "bootstrap-css.reslib"),
         @ResourceDependency(library = "org.richfaces", name = "bootstrap-js.reslib")})
 public class CommandButtonRendererBase extends org.richfaces.ui.ajax.command.CommandButtonRendererBase {

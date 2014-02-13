@@ -14,7 +14,7 @@
     <h:form id="form">
         <b:commandButton render="form" action="#{bean.setValue('show')}" value="Show" rendered="#{bean.value != 'show'}" />
         <b:commandButton render="form" action="#{bean.setValue('noshow')}" value="Hide" rendered="#{bean.value == 'show'}" />
-        <rich:panel rendered="#{bean.value == 'show'}">
+        <r:panel rendered="#{bean.value == 'show'}">
         <b:orderingList id="myOrderingList"
                         value="#{listSelectBean.capitals}"
                         var="capital"
@@ -33,7 +33,7 @@
                 #{capital.state}
             </h:column>
         </b:orderingList>
-        </rich:panel>
+        </r:panel>
     </h:form>
 </h:body>
 

@@ -32,9 +32,12 @@ import org.richfaces.renderkit.RendererBase;
  * @author <a href="http://community.jboss.org/people/bleathem">Brian Leathem</a>
  */
 @ResourceDependencies({
-        @ResourceDependency(library = "org.richfaces", name = "ajax.reslib"),
-        @ResourceDependency(library = "org.richfaces", name = "base-component.reslib"),
-        @ResourceDependency(library = "org.richfaces", name = "bootstrap-css.reslib")})
+    @ResourceDependency(library = "javax.faces", name = "jsf.js"),
+    @ResourceDependency(library = "org.richfaces", name = "jquery.js"),
+    @ResourceDependency(library = "org.richfaces", name = "richfaces.js"),
+    @ResourceDependency(library = "org.richfaces", name = "richfaces-queue.reslib"),
+    @ResourceDependency(library = "org.richfaces", name = "common/richfaces-base-component.js"),
+    @ResourceDependency(library = "org.richfaces", name = "bootstrap-css.reslib")})
 public abstract class GridRowRendererBase extends RendererBase {
     public static final String RENDERER_TYPE = "org.richfaces.bootstrap.GridRowRenderer";
 }
